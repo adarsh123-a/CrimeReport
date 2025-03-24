@@ -94,18 +94,6 @@ function Navbar() {
           >
             Witness
           </Link>
-          <Link
-            to="/Hearing"
-            className="text-lg hover:text-gray-300 transition"
-          >
-            Hearing Report
-          </Link>
-          <Link
-            to="/cashTracking"
-            className="text-lg hover:text-gray-300 transition"
-          >
-            Case Tracking
-          </Link>
           <Link to="/search" className="text-lg hover:text-gray-300 transition">
             SearchCrime
           </Link>
