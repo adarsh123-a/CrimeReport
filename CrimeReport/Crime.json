@@ -1,0 +1,162 @@
+{
+  "data": [
+    {
+      "caseId": "C123456",
+      "personName": "John Doe",
+      "gender": "Male",
+      "dob": "1985-07-15",
+      "crimeDate": "2024-03-10",
+      "fatherName": "Robert Doe",
+      "typeOfCrime": "Burglary",
+      "crimeLocation": "123 Main Street, New York, NY",
+      "personAddress": "456 Elm Street, New York, NY",
+      "status": "Under Investigation",
+      "finalResult": "Pending Trial",
+      "witnesses": [
+        {
+          "witnessName": "Emily Smith",
+          "witnessId": "W001",
+          "witnessPhoneNumber": "+1-202-555-0123",
+          "witnessAddress": "789 Oak Street, New York, NY",
+          "crimeDescription": "Saw the suspect breaking into the store at midnight."
+        }
+      ],
+      "lawyer": {
+        "lawyerName": "Sarah Williams",
+        "lawyerExp": "12 years",
+        "lawyerLastCaseResult": "Won",
+        "lawyerComments": "Confident about proving innocence."
+      },
+      "judge": {
+        "judgeName": "Richard Brown",
+        "judgeExp": "18 years",
+        "numberOfHearing": "2",
+        "judgeResult": "Next hearing scheduled",
+        "nextHearingDate": "2024-04-15"
+      },
+      "policeOfficer": {
+        "officerName": "Detective Alan Reed",
+        "officerBadgeNumber": "NY-78945",
+        "officerComments": "Collected fingerprints and CCTV footage."
+      }
+    },
+    {
+      "caseId": "C789012",
+      "personName": "Jane Smith",
+      "gender": "Female",
+      "dob": "1990-04-22",
+      "crimeDate": "2024-02-18",
+      "fatherName": "William Smith",
+      "typeOfCrime": "Fraud",
+      "crimeLocation": "987 Market Street, San Francisco, CA",
+      "personAddress": "654 Maple Avenue, San Francisco, CA",
+      "status": "On Trial",
+      "finalResult": "Awaiting Verdict",
+      "witnesses": [
+        {
+          "witnessName": "David Clark",
+          "witnessId": "W003",
+          "witnessPhoneNumber": "+1-415-555-0789",
+          "witnessAddress": "852 Cedar Lane, San Francisco, CA",
+          "crimeDescription": "Victim of the fraudulent investment scheme."
+        }
+      ],
+      "lawyer": {
+        "lawyerName": "Mark Robinson",
+        "lawyerExp": "15 years",
+        "lawyerLastCaseResult": "Lost",
+        "lawyerComments": "Defense strategy is being revised."
+      },
+      "judge": {
+        "judgeName": "Anna Carter",
+        "judgeExp": "22 years",
+        "numberOfHearing": "4",
+        "judgeResult": "Final arguments next week"
+      },
+      "policeOfficer": {
+        "officerName": "Sergeant Lisa Greene",
+        "officerBadgeNumber": "SF-56789",
+        "officerComments": "Analyzing financial records for further evidence."
+      }
+    },
+    {
+      "caseId": "C567890",
+      "personName": "Michael Johnson",
+      "gender": "Male",
+      "dob": "1982-11-03",
+      "crimeDate": "2024-01-25",
+      "fatherName": "James Johnson",
+      "typeOfCrime": "Assault",
+      "crimeLocation": "456 Park Avenue, Chicago, IL",
+      "personAddress": "222 Pine Street, Chicago, IL",
+      "status": "On Trial",
+      "finalResult": "Pending Trial",
+      "witnesses": [
+        {
+          "witnessName": "Sophia Williams",
+          "witnessId": "W005",
+          "witnessPhoneNumber": "+1-312-555-0345",
+          "witnessAddress": "101 River Road, Chicago, IL",
+          "crimeDescription": "Saw the altercation and called 911."
+        }
+      ],
+      "lawyer": {
+        "lawyerName": "David Miller",
+        "lawyerExp": "10 years",
+        "lawyerLastCaseResult": "Won",
+        "lawyerComments": "Client claims self-defense."
+      },
+      "judge": {
+        "judgeName": "Robert Adams",
+        "judgeExp": "20 years",
+        "numberOfHearing": "3",
+        "judgeResult": "Next hearing scheduled",
+        "nextHearingDate": "2024-04-20"
+      },
+      "policeOfficer": {
+        "officerName": "Officer Brian Carter",
+        "officerBadgeNumber": "CHI-12345",
+        "officerComments": "Reviewed security footage and collected statements."
+      }
+    },
+    {
+      "caseId": "C901234",
+      "personName": "Emma Davis",
+      "gender": "Female",
+      "dob": "1995-08-19",
+      "crimeDate": "2023-12-05",
+      "fatherName": "Daniel Davis",
+      "typeOfCrime": "Cybercrime",
+      "crimeLocation": "Online Fraud, Miami, FL",
+      "personAddress": "789 Ocean Drive, Miami, FL",
+      "status": "Convicted",
+      "finalResult": "Guilty",
+      "witnesses": [
+        {
+          "witnessName": "Liam Thompson",
+          "witnessId": "W006",
+          "witnessPhoneNumber": "+1-786-555-0912",
+          "witnessAddress": "234 Sunset Blvd, Miami, FL",
+          "crimeDescription": "Lost money in an online scam run by the accused."
+        }
+      ],
+      "lawyer": {
+        "lawyerName": "Jessica Wright",
+        "lawyerExp": "8 years",
+        "lawyerLastCaseResult": "Lost",
+        "lawyerComments": "Client admitted partial involvement."
+      },
+      "judge": {
+        "judgeName": "Henry Wilson",
+        "judgeExp": "25 years",
+        "numberOfHearing": "5",
+        "judgeResult": "Verdict given"
+      },
+      "policeOfficer": {
+        "officerName": "Detective Mark Spencer",
+        "officerBadgeNumber": "MIA-54321",
+        "officerComments": "Tracked digital transactions to confirm involvement."
+      }
+    }
+  ]
+}
