@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { getDatabase, ref, onValue, push } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function IncidentReport() {
+  const navigate = useNavigate();
+  const auth = getAuth();
   const [data, setData] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -17,13 +21,29 @@ function IncidentReport() {
 
   // Fetch incident reports from Firebase
   const fetchData = async () => {
+    if (!auth.currentUser) {
+      console.log("User not authenticated");
+      return;
+    }
+
     try {
-      const response = await axios.get(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data.json`
-      );
-      if (response.data) {
-        setData(Object.values(response.data)); // Convert object to array
-      }
+      const database = getDatabase();
+      const dataRef = ref(database, 'data');
+      
+      // Listen for value changes
+      onValue(dataRef, (snapshot) => {
+        const responseData = snapshot.val();
+        if (responseData) {
+          // Convert object to array
+          const dataArray = Object.keys(responseData).map(key => ({
+            id: key,
+            ...responseData[key]
+          }));
+          setData(dataArray);
+        } else {
+          setData([]);
+        }
+      });
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -51,7 +71,18 @@ function IncidentReport() {
   // Submit form and post data to Firebase
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Check if user is authenticated
+    if (!auth.currentUser) {
+      alert("Please login to submit a report");
+      navigate("/login");
+      return;
+    }
+
     try {
+      const database = getDatabase();
+      const dataRef = ref(database, 'data');
+      
       const randomId = "C" + String(Date.now());
       const payload = {
         ...formData,
@@ -62,15 +93,12 @@ function IncidentReport() {
         judge: {},
         policeOfficer: {},
       };
-      const response = await axios.post(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data.json`,
-        payload
-      );
-      console.log("Incident Report Submitted:", response.data);
+      
+      // Push data to Firebase
+      await push(dataRef, payload);
+      
+      console.log("Incident Report Submitted");
       alert("Incident report submitted successfully!");
-
-      // Refresh the incident list
-      fetchData();
 
       // Reset form after submission
       setFormData({
@@ -82,7 +110,7 @@ function IncidentReport() {
         location: "",
         gender: "",
         description: "",
-        files: [],
+        evidence: "",
       });
     } catch (error) {
       console.log("Error submitting incident:", error);

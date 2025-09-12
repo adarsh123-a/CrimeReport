@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import { getDatabase, ref, onValue, update } from "firebase/database"; // Import Firebase database functions
 
 function WitnessSubmission() {
   const [cases, setCases] = useState([]); // Stores case data
@@ -16,17 +16,23 @@ function WitnessSubmission() {
 
   const fetchCases = async () => {
     try {
-      const response = await axios.get(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data.json`
-      );
-
-      if (response.data) {
-        const caseList = Object.entries(response.data).map(([key, value]) => ({
-          ...value,
-          firebaseKey: key, // Store Firebase's generated key
-        }));
-        setCases(caseList); // Store cases with keys
-      }
+      const database = getDatabase(); // Get database instance
+      const dataRef = ref(database, 'data'); // Reference to 'data' node
+      
+      // Listen for value changes
+      onValue(dataRef, (snapshot) => {
+        const responseData = snapshot.val();
+        if (responseData) {
+          // Convert object to array with keys
+          const caseList = Object.keys(responseData).map(key => ({
+            ...responseData[key],
+            firebaseKey: key, // Store Firebase's generated key
+          }));
+          setCases(caseList); // Store cases with keys
+        } else {
+          setCases([]);
+        }
+      });
     } catch (error) {
       console.error("Error fetching cases:", error);
     }
@@ -78,14 +84,15 @@ function WitnessSubmission() {
     }
 
     try {
+      const database = getDatabase(); // Get database instance
+      const caseRef = ref(database, `data/${selectedCase.firebaseKey}`); // Reference to specific case
+      
       const updatedWitnesses = selectedCase.witnesses
         ? [...selectedCase.witnesses, formData]
         : [formData];
 
-      await axios.patch(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data/${selectedCase.firebaseKey}.json`,
-        { witnesses: updatedWitnesses }
-      );
+      // Update the case with new witness data
+      await update(caseRef, { witnesses: updatedWitnesses });
 
       alert("Witness information submitted successfully!");
 

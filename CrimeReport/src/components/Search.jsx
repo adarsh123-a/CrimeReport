@@ -1,4 +1,4 @@
-import axios from "axios";
+import { getDatabase, ref, onValue, update } from "firebase/database"; // Import Firebase database functions
 import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
@@ -29,27 +29,31 @@ function SearchCrime() {
 
   const fetchdata = async () => {
     try {
-      const response = await axios.get(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data.json`
-      );
+      const database = getDatabase(); // Get database instance
+      const dataRef = ref(database, 'data'); // Reference to 'data' node
+      
+      // Listen for value changes
+      onValue(dataRef, (snapshot) => {
+        const responseData = snapshot.val();
+        if (responseData) {
+          // Convert object to array with keys
+          const cases = Object.keys(responseData).map(key => ({
+            ...responseData[key],
+            firebaseKey: key, // Store Firebase key for updates
+          }));
 
-      if (response.data) {
-        const cases = Object.entries(response.data).map(([key, data]) => ({
-          ...data,
-          firebaseKey: key, // Store Firebase key for updates
-        }));
+          const filteredData = cases.filter((item) =>
+            item[filterType]
+              ?.toString()
+              .toLowerCase()
+              .includes(search.toLowerCase())
+          );
 
-        const filteredData = cases.filter((item) =>
-          item[filterType]
-            ?.toString()
-            .toLowerCase()
-            .includes(search.toLowerCase())
-        );
-
-        setData(filteredData);
-      } else {
-        setData([]);
-      }
+          setData(filteredData);
+        } else {
+          setData([]);
+        }
+      });
     } catch (error) {
       console.log(error);
     }
@@ -82,12 +86,13 @@ function SearchCrime() {
 
     setLoading(true);
     try {
+      const database = getDatabase(); // Get database instance
+      const caseRef = ref(database, `data/${selectedCase.firebaseKey}`); // Reference to specific case
+      
       const updateData = { lawyer: { name: lawyerName, phone: lawyerPhone } };
 
-      await axios.patch(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data/${selectedCase.firebaseKey}.json`,
-        updateData
-      );
+      // Update the case with lawyer data
+      await update(caseRef, updateData);
 
       setData((prevData) =>
         prevData.map((item) =>
@@ -107,10 +112,11 @@ function SearchCrime() {
 
   const updateCaseStatus = async (caseId, firebaseKey, newStatus) => {
     try {
-      await axios.patch(
-        `https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/data/${firebaseKey}.json`,
-        { status: newStatus }
-      );
+      const database = getDatabase(); // Get database instance
+      const caseRef = ref(database, `data/${firebaseKey}`); // Reference to specific case
+      
+      // Update the case status
+      await update(caseRef, { status: newStatus });
 
       // Update state to reflect changes immediately
       setData((prevData) =>

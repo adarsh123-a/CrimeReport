@@ -15,12 +15,12 @@ function Home() {
         <div className="text-center">
           <h1 className="text-4xl font-bold">Report Crime. Stay Safe.</h1>
           <p className="text-lg mt-2">Your report could save lives.</p>
-          <Link
+          <button className="pt-2"><Link
             to="/IncidentReporting"
-            className="mt-4 px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition"
+            className=" p-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition"
           >
             Report Now
-          </Link>
+          </Link></button>
         </div>
       </header>
 

@@ -15,7 +15,7 @@
     "@emotion/styled": "^11.14.0",
     "@tailwindcss/vite": "^4.0.14",
     "axios": "^1.8.4",
-    "firebase": "^11.5.0",
+    "firebase": "^12.2.1",
     "framer-motion": "^12.5.0",
     "lucide-react": "^0.483.0",
     "react": "^19.0.0",

@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthServices/AuthContext";
 import React from "react";
-import axios from "axios";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 
 function Login() {
   const { login } = useAuth();
@@ -18,43 +19,37 @@ function Login() {
     e.preventDefault();
     setError("");
 
-    if (formData.email && formData.password) {
-      try {
-        const response = await axios.get(
-          "https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/user.json",
-          formData
-        );
-        console.log(response);
-        const resArray = Object.values(response.data);
-        validateUser(resArray, formData.email, formData.password);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      setError("Invalid email or password");
-    }
-  };
-
-  const validateUser = (res, email, pass) => {
-    if (res && email && pass) {
-      let validated = false;
-      res.forEach((element) => {
-        if (element.email == email && element.password == pass) {
-          validated = true;
-        }
-      });
-      if (validated) {
-        alert("Login successful!");
-        setFormData({ email: "", password: "" });
-        navigate("/Home");
-        validated = false;
-      } else {
-        alert("Login failed, please check email and password");
-        validated = false;
-      }
-    } else {
-      alert("All fields requird");
+    if (!formData.email || !formData.password) {
+      setError("All fields are required");
       return;
+    }
+
+    try {
+      // Sign in with Firebase Authentication
+      await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      
+      // If login is successful
+      setFormData({ email: "", password: "" });
+      navigate("/Home");
+    } catch (error) {
+      console.error("Login error:", error);
+      
+      // Handle specific error cases
+      switch (error.code) {
+        case "auth/user-not-found":
+        case "auth/invalid-credential":
+          setError("Invalid email or password");
+          break;
+        case "auth/invalid-email":
+          setError("Invalid email address format");
+          break;
+        case "auth/too-many-requests":
+          setError("Too many failed attempts. Please try again later.");
+          break;
+        default:
+          console.error("Detailed error:", error);
+          setError("Failed to login. Please try again.");
+      }
     }
   };
 

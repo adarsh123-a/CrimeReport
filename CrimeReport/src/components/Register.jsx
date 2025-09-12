@@ -2,7 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthServices/AuthContext";
 import React from "react";
-import axios from "axios";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
+import { getDatabase, ref, set } from "firebase/database";
 
 function Register() {
   // const { register } = useAuth();
@@ -38,15 +40,51 @@ function Register() {
       return;
     }
 
-    // register({ email: formData.email, password: formData.password });
-    const response = await axios.post(
-      "https://crimereport-3f796-default-rtdb.asia-southeast1.firebasedatabase.app/user.json",
-      formData
-    );
-    console.log(response);
-    alert("Registration successful! Please login.");
-    setFormData({ name: "", email: "", password: "", confirmPassword: "" });
-    navigate("/login");
+    try {
+      // Create user with Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      
+      // Get reference to database
+      const db = getDatabase();
+      
+      try {
+        // Save additional user data to Realtime Database
+        await set(ref(db, 'users/' + userCredential.user.uid), {
+          name: formData.name,
+          email: formData.email,
+          createdAt: Date.now()
+        });
+      } catch (dbError) {
+        console.error("Database error:", dbError);
+        setError("Failed to save user data. Please try again.");
+        // If database save fails, we should delete the auth user
+        await userCredential.user.delete();
+        return;
+      }
+
+      alert("Registration successful! Please login.");
+      setFormData({ name: "", email: "", password: "", confirmPassword: "" });
+      navigate("/login");
+    } catch (error) {
+      console.error("Registration error:", error);
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          setError("An account with this email already exists");
+          break;
+        case "auth/invalid-email":
+          setError("Invalid email address format");
+          break;
+        case "auth/weak-password":
+          setError("Password should be at least 6 characters");
+          break;
+        default:
+          setError("Failed to register. Please try again.");
+      }
+    }
   };
 
   return (
