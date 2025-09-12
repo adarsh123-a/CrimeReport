@@ -1,12 +1,39 @@
-# React + Vite
+# 🕵️‍♂️ Crime Report System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A **Crime Report Web Application** built with **React**, **Firebase**, **Chakra UI**, and **Tailwind CSS**.  
+This platform allows users to report crimes, track case statuses, and engage with public safety initiatives.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- 🔐 **User Authentication** (Firebase Auth – Login & Signup)
+- 📝 **Report Crimes** with details and evidence
+- 📊 **Case Tracking Dashboard** (track investigation progress)
+- 👨‍⚖️ **Lawyer Insights & Comments** on cases
+- 🗂 **Hearing Proceedings Recording**
+- 🔎 **Search & Filter Cases** for easy navigation
+- 📱 **Responsive Design** (Chakra UI + Tailwind)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Tech Stack
+- **Frontend:** React (CRA / Vite)
+- **Backend/Database:** Firebase (Firestore & Auth)
+- **UI Libraries:** Chakra UI & Tailwind CSS
+- **Hosting:** Firebase Hosting / Vercel
+
+---
+
+## 📂 Project Structure
+crime-report/
+│── public/ # Static assets
+│── src/
+│ ├── components/ # Reusable components
+│ ├── pages/ # Application pages (Home, Dashboard, Report Form, etc.)
+│ ├── context/ # Auth & State management
+│ ├── services/ # Firebase config & helpers
+│ ├── styles/ # Tailwind + custom styles
+│ └── App.js # Root component
+│── package.json
+│── tailwind.config.js
+│── README.md
