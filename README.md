@@ -4,6 +4,7 @@ A **Crime Report Web Application** built with **React**, **Firebase**, **Chakra 
 This platform allows users to report crimes, track case statuses, and engage with public safety initiatives.
 
 ---
+## deploye link - https://earnest-seahorse-ab9acb.netlify.app/
 
 ## 🚀 Features
 - 🔐 **User Authentication** (Firebase Auth – Login & Signup)
