@@ -44,7 +44,7 @@ function Navbar() {
           >
             Witness
           </Link>
-          <Link
+          {/* <Link
             to="/Hearing"
             className="text-lg hover:text-gray-300 transition"
           >
@@ -55,7 +55,7 @@ function Navbar() {
             className="text-lg hover:text-gray-300 transition"
           >
             Case Tracking
-          </Link>
+          </Link> */}
           <Link to="/search" className="text-lg hover:text-gray-300 transition">
             SearchCrime
           </Link>
