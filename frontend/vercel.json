@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/api/:path*",
+            "destination": "https://cold-moons-exist.loca.lt/api/:path*"
+        },
+        {
             "source": "/(.*)",
             "destination": "/"
         }
