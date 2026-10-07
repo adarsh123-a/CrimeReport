@@ -13,7 +13,7 @@ const seedData = async () => {
     );
     console.log("Connected to MongoDB for enterprise seeding...");
 
-    // Seed Default Users
+   
     const salt = await bcrypt.genSalt(10);
     const defaultPassword = await bcrypt.hash("password123", salt);
 
